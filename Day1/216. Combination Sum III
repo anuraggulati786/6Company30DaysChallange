@@ -1,0 +1,34 @@
+class Solution {
+private:
+    void recCombination(vector<int>& ds, vector<int>& v, vector<vector<int>>& res, int k, int n, int indx) {
+        //base case
+        if(ds.size() == k) {
+            if(n == 0) {
+                res.push_back(ds);
+                return;
+            }
+        }
+
+        if(indx == v.size()) {
+            return;
+        }
+
+        if(ds.size() < k) { // if the size of ds is less than k then only pick the number
+            if(v[indx] <= n) { // if current element is less than or equal to the n then only push in ds
+                ds.push_back(v[indx]);
+                recCombination(ds,v,res,k,n-v[indx],indx+1);
+                ds.pop_back();
+                recCombination(ds,v,res,k,n,indx+1);
+            }
+        }
+
+    }    
+public:
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<vector<int>> res;
+        vector<int> v = {1,2,3,4,5,6,7,8,9};
+        vector<int> ds;
+        recCombination(ds,v,res,k,n,0);
+        return res;
+    }
+};
